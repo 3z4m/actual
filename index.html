@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bijam Shakya | Visual Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark-gray: #333333;
+            --medium-gray: #777777;
+            --light-gray: #e0e0e0;
+            --white: #ffffff;
+            --grid: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M20 0v40M0 20h40' stroke='rgba(10,10,10,0.05)' stroke-width='1'/%3E%3C/svg%3E");
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            background-image: var(--grid);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: var(--white);
+            border-bottom: 1px solid var(--light-gray);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(5px);
+        }
+        
+        header.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 2.5rem;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .logo-b {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            position: relative;
+            line-height: 1;
+            color: var(--black);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .logo:hover .logo-b {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .logo-b::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--dark-gray);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .logo:hover .logo-b::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            position: relative;
+            padding: 0.25rem 0;
+            font-size: 1rem;
+            overflow: hidden;
+        }
+        
+        nav a::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            color: var(--medium-gray);
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        nav a:hover::before {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 2rem;
+            position: relative;
+            background-color: var(--white);
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+            font-weight: 700;
+            color: var(--black);
+            position: relative;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: var(--black);
+            animation: underlineGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        @keyframes underlineGrow {
+            from { width: 0 }
+            to { width: 100px }
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            color: var(--dark-gray);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .hero-button {
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px) }
+            to { opacity: 1; transform: translateY(0) }
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 0;
+            border: 2px solid var(--black);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            color: var(--black);
+        }
+        
+        .btn:hover::before {
+            left: 0;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .scroll-indicator span {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--black);
+            animation: fadePulse 2s infinite;
+        }
+        
+        @keyframes fadePulse {
+            0%, 100% { opacity: 0.6 }
+            50% { opacity: 1 }
+        }
+        
+        .scroll-indicator::after {
+            content: '';
+            width: 2px;
+            height: 40px;
+            background: var(--black);
+            animation: scrollPulse 2s infinite;
+        }
+        
+        @keyframes scrollPulse {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(10px); opacity: 0.5; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Floating shapes */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            background: var(--black);
+            animation: float 15s infinite linear;
+        }
+        
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+        
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            bottom: 30%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 25s;
+            border-radius: 50%;
+        }
+        
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            left: 30%;
+            animation-delay: 4s;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+        
+        /* Works Grid */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .work-card {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--black);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--white);
+        }
+        
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 12px 12px 0 var(--light-gray);
+        }
+        
+        .work-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .work-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(110%);
+            transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .work-card:hover img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.05);
+        }
+        
+        .work-title {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: var(--white);
+            border-top: 1px solid var(--black);
+            transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 3;
+        }
+        
+        .work-card:hover .work-title {
+            bottom: 0;
+        }
+        
+        /* Sections */
+        section {
+            margin-bottom: 8rem;
+            position: relative;
+        }
+        
+        h2 {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: var(--black);
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        h2:hover::after {
+            width: 100%;
+        }
+        
+        /* Skills - NEW EXPERIENCE BAR STYLE */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .skill {
+            flex: 1;
+            min-width: 250px;
+            padding: 1.5rem;
+            border: 1px solid var(--light-gray);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0 var(--black);
+        }
+        
+        .skill h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .skill p {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .skill-meter-container {
+            margin-top: 1.5rem;
+            position: relative;
+            height: 30px;
+            background: var(--light-gray);
+            border: 1px solid var(--black);
+            overflow: hidden;
+        }
+        
+        .skill-meter {
+            height: 100%;
+            background: var(--black);
+            position: relative;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+        
+        .skill-meter::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1),
+                rgba(255,255,255,0.1) 5px,
+                rgba(255,255,255,0.05) 5px,
+                rgba(255,255,255,0.05) 10px
+            );
+        }
+        
+        .skill-meter-text {
+            color: var(--white);
+            font-size: 0.8rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Specific skill levels */
+        .skill:nth-child(1) .skill-meter {
+            width: 40%;
+        }
+        
+        .skill:nth-child(2) .skill-meter {
+            width: 70%;
+        }
+        
+        .skill:nth-child(3) .skill-meter {
+            width: 65%;
+        }
+        
+        /* Contact */
+        .contact-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: var(--black);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+        
+        .contact-link:hover {
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+        
+        .contact-link:hover::before {
+            transform: translateY(0);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            .hero {
+                padding: 0 1.5rem;
+                min-height: 600px;
+            }
+            
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-b">B</div>
+        </div>
+        <nav>
+            <a href="#work" data-text="Work">Work</a>
+            <a href="#about" data-text="About">About</a>
+            <a href="#contact" data-text="Contact">Contact</a>
+        </nav>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>Visual Experiments<br>& Digital Craft</h1>
+            <p>Exploring the intersection of design, technology, and human experience through bold visual narratives.</p>
+            <div class="hero-button">
+                <a href="path-to-your-actual-cv.pdf" class="btn" download="Your-Name-CV.pdf">
+                 <span>Download CV</span>
+                     <i class="fas fa-download"></i>
+                 </a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator" onclick="document.querySelector('#work').scrollIntoView({ behavior: 'smooth' })">
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section id="work">
+            <h2>Works</h2>
+            <div class="works-grid">
+                <div class="work-card">
+                    <img src="Group 19.jpg" alt="Design project">
+                    <div class="work-title">
+                        <h3>News App</h3>
+                        <p>Figma, 2025</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <img src="p.jpg" alt="UI/UX project">
+                    <div class="work-title">
+                        <h3>Website</h3>
+                        <p>UI/UX, 2025</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <img src="Desktop - 4.jpg" alt="Branding project">
+                    <div class="work-title">
+                        <h3>Corporate Branding</h3>
+                        <p>E-commerce, 2025</p>
+                    </div>
+        </section>
+        
+        <section id="about">
+            <h2>Design Philosophy</h2>
+            <p>Design is how I think, question, and communicate. I work at the intersection of graphic fundamentals and digital experimentation, where typography, interaction, and emotion converge. My goal is to create work that doesn’t just look good — it resonates, challenges, and stays with you.</p>
+            
+            <div class="skills-container">
+                <div class="skill">
+                    <h3>Graphic Design</h3>
+                    <p>Developing foundational skills in typography, layout, and visual communication</p>
+                    <div class="skill-meter-container">
+                        <div class="skill-meter" style="width: 40%">
+                            <span class="skill-meter-text">40%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h3>Figma</h3>
+                    <p>Confident with UI/UX workflows, prototyping, and design systems</p>
+                    <div class="skill-meter-container">
+                        <div class="skill-meter" style="width: 70%">
+                            <span class="skill-meter-text">70%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h3>HTML/CSS</h3>
+                    <p>Building interactive experiences with clean, semantic code</p>
+                    <div class="skill-meter-container">
+                        <div class="skill-meter" style="width: 65%">
+                            <span class="skill-meter-text">65%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <h2>Let's Create Together</h2>
+            <p>For collaborations or inquiries, feel free to reach out through any of these channels:</p>
+            <div class="contact-links">
+                    <a href="mailto:shakyabijam543@gmail.com" class="contact-link" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                     </a>
+               <a href="https://instagram.com/bzam_fr" class="contact-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.behance.net/b24mshakya" class="contact-link" aria-label="Behance">
+                    <i class="fab fa-behance"></i>
+                </a>
+                <a href="https://dribbble.com/bZn4" class="contact-link" aria-label="Dribbble">
+                    <i class="fab fa-dribbble"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>© 2025 Bijam Shakya. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Animate skill bars on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillMeters = document.querySelectorAll('.skill-meter');
+            skillMeters.forEach(meter => {
+                // Reset width to 0 for animation
+                const finalWidth = meter.style.width;
+                meter.style.width = '0';
+                
+                // Animate after a short delay
+                setTimeout(() => {
+                    meter.style.width = finalWidth;
+                }, 300);
+            });
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.work-card, section');
+            
+            elements.forEach(el => {
+                const elementPosition = el.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animation
+        document.querySelectorAll('.work-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
